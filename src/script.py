@@ -5,20 +5,21 @@ import multiprocessing
 import time
 import logging
 import math
+import sys
 
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 from watchdog.events import FileSystemEventHandler
 from demo_bpm_extract import get_file_bpm
 
-videoOutputPath = "output/video_out"
-webcamOutputPath = "output/webcam_out"
+videoOutputPath = "../output/video_out"
+webcamOutputPath = "../output/webcam_out"
 
-videoPath = "videos/jimin_dance.mp4"
-testVideoPath = "videos/test.mov"
-btsIdolAudioPath = "videos/bts idol.mp3"
-userWebcamFeedCommand = "./build/examples/openpose/openpose.bin --net_resolution -1x80 -model_pose COCO -write_json %s" %(webcamOutputPath)
-showVideoCommand = "./build/examples/openpose/openpose.bin --net_resolution -1x80 --output_resolution -1x80 -model_pose COCO --write_json %s --video " %(videoOutputPath)
+videoPath = ""
+testVideoPath = ""
+btsIdolAudioPath = ""
+userWebcamFeedCommand = "../build/examples/openpose/openpose.bin --net_resolution -1x80 -model_pose COCO -write_json %s" %(webcamOutputPath)
+showVideoCommand = "../build/examples/openpose/openpose.bin --net_resolution -1x80 --output_resolution -1x80 -model_pose COCO --write_json %s --video " %(videoOutputPath)
 bmpComand = "aubio tempo -i"
 
 poseCorrectnessThreshold = 100.0
@@ -199,9 +200,8 @@ def parseDataTest():
     prettyPrintPoseData(poses[0])
 
 if __name__ == '__main__':
+    videoPath = sys.argv[1]
 
-    songBPM = get_file_bpm(btsIdolAudioPath)
-    print("The song BBM %s" %songBPM)
     bodyParts = readJSON('bodyparts.json')['parts']
     #parseDataTest()
 
